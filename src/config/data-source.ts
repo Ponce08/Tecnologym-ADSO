@@ -1,7 +1,8 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { env } from './env';
-
+import { Role } from '../entities/Role';
+import { User } from '../entities/User';
 /**
  * Configuración de la fuente de datos principal de la aplicación.
  *
@@ -17,7 +18,12 @@ export const AppDataSource = new DataSource({
   username: env.DB_USERNAME,
   password: env.DB_PASSWORD,
   database: env.DB_DATABASE,
-  synchronize: true,
-  logging: false,
-  entities: ['src/entities/**/*.ts'],
+
+  synchronize: false,
+
+  logging: true,
+
+  entities: [Role, User],
+
+  migrations: ['src/migrations/*.ts'],
 });
