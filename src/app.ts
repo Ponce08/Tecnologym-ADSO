@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import authRoutes from './routes/auth.routes';
 
 // Cargar las variables de entorno
 dotenv.config();
@@ -26,14 +27,7 @@ app.use(express.json());
 // Permite recibir datos desde formularios
 app.use(express.urlencoded({ extended: true }));
 
-// Ruta principal
-app.get('/', (_req, res) => {
-  res.status(200).json({
-    success: true,
-    message: '🚀 API de Tecnologym funcionando correctamente',
-    version: '1.0.0',
-  });
-});
+app.use('/api/auth', authRoutes);
 
 // Exportar la aplicación
 export default app;
