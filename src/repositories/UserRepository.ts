@@ -1,6 +1,8 @@
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../config/data-source';
 import { User } from '../entities/User';
+import { RegisterDto } from '../schemas/auth/register.schema';
+import { UserResponseDto } from '../dtos/users/UserResponseDto';
 
 /**
  * Repositorio encargado de todas las operaciones relacionadas
@@ -19,7 +21,8 @@ export class UserRepository {
   async create(userData: Partial<User>): Promise<User> {
     const user = this.repository.create(userData);
 
-    return await this.repository.save(user);
+    await this.repository.save(user);
+    return user;
   }
 
   async findByEmail(email: string): Promise<User | null> {

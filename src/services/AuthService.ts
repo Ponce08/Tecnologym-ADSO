@@ -1,5 +1,8 @@
 import { UserRepository } from '../repositories/UserRepository';
+import { RoleRepository } from '../repositories/RoleRepository';
+
 import { UserMapper } from '../mappers/Usermapper';
+
 import { hashPassword } from '../utils/hash';
 import { comparePassword } from '../utils/hash';
 import { generateToken } from '../utils/jwt';
@@ -10,6 +13,7 @@ import { RegisterDto } from '../schemas/auth/register.schema';
 
 export class AuthService {
   private userRepository = new UserRepository();
+  private roleRepository = new RoleRepository();
 
   async register(userData: RegisterDto): Promise<UserResponseDto> {
     const existingUser = await this.userRepository.findByEmail(userData.email!);
@@ -18,11 +22,19 @@ export class AuthService {
       throw new Error('El correo electrónico ya se encuentra registrado.');
     }
 
+    const role = await this.roleRepository.findByName('Cliente');
+
+    if (!role) {
+      throw new Error('El rol CLIENTE no existe.');
+    }
+
     const hashedPassword = await hashPassword(userData.password!);
 
-    userData.password = hashedPassword;
-
-    const user = await this.userRepository.create(userData);
+    const user = await this.userRepository.create({
+      ...userData,
+      password: hashedPassword,
+      role,
+    });
 
     return UserMapper.toResponse(user);
   }
