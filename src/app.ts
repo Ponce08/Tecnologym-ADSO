@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.routes';
+import { errorMiddleware } from './middlewares/errors/error.middleware';
 
 // Cargar las variables de entorno
 dotenv.config();
@@ -29,6 +30,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRoutes);
+
+// Middleware centralizado de errores
+app.use(errorMiddleware);
 
 // Exportar la aplicación
 export default app;

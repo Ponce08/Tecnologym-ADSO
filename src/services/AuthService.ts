@@ -10,25 +10,30 @@ import { generateToken } from '../utils/jwt';
 import { UserResponseDto } from '../dtos/users/UserResponseDto';
 import { LoginResponseDto } from '../dtos/auth/LoginResponseDto';
 import { RegisterDto } from '../schemas/auth/register.schema';
+import { AppError } from '../errors/AppError';
 
 export class AuthService {
   private userRepository = new UserRepository();
   private roleRepository = new RoleRepository();
 
   async register(userData: RegisterDto): Promise<UserResponseDto> {
-    const existingUser = await this.userRepository.findByEmail(userData.email!);
+    const existingUser = await this.userRepository.findByEmail(userData.email);
 
     if (existingUser) {
-      throw new Error('El correo electrónico ya se encuentra registrado.');
+      throw new AppError(
+        'El correo ya está registrado',
+        409,
+        'EMAIL_ALREADY_EXISTS',
+      );
     }
 
     const role = await this.roleRepository.findByName('Cliente');
 
     if (!role) {
-      throw new Error('El rol CLIENTE no existe.');
+      throw new AppError('El rol Cliente no existe.', 500, 'ROLE_NOT_EXISTS');
     }
 
-    const hashedPassword = await hashPassword(userData.password!);
+    const hashedPassword = await hashPassword(userData.password);
 
     const user = await this.userRepository.create({
       ...userData,
@@ -63,9 +68,7 @@ export class AuthService {
 
     const token = generateToken({
       sub: user.id,
-
       email: user.email,
-
       role: user.role.name,
     });
 

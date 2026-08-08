@@ -15,22 +15,15 @@ export class AuthController {
   private authService = new AuthService();
 
   register = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const userData = req.body;
+    const userData = req.body;
 
-      const user = await this.authService.register(userData);
+    const user = await this.authService.register(userData);
 
-      res.status(201).json({
-        success: true,
-        message: 'Usuario registrado correctamente.',
-        data: user,
-      });
-    } catch (error) {
-      res.status(400).json({
-        success: false,
-        message: error instanceof Error ? error.message : 'Error interno.',
-      });
-    }
+    res.status(201).json({
+      success: true,
+      message: 'Usuario registrado correctamente.',
+      data: user,
+    });
   };
 
   login = async (req: Request, res: Response): Promise<void> => {
