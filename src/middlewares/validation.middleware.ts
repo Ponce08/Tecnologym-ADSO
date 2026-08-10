@@ -10,7 +10,7 @@ import { ZodType } from 'zod';
  *   - reemplaza req.body con los datos transformados
  *   - continúa al siguiente middleware o controlador
  */
-export function validate<T>(schema: ZodType<T>) {
+export function validateMiddleware<T>(schema: ZodType<T>) {
   return (req: Request, res: Response, next: NextFunction): void => {
     const result = schema.safeParse(req.body);
 

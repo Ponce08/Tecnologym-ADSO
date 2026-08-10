@@ -6,11 +6,13 @@ import { UserMapper } from '../mappers/Usermapper';
 import { hashPassword } from '../utils/hash';
 import { comparePassword } from '../utils/hash';
 import { generateToken } from '../utils/jwt';
-// DTOs
+
+import { AppError } from '../errors/AppError';
+
 import { UserResponseDto } from '../dtos/users/UserResponseDto';
 import { LoginResponseDto } from '../dtos/auth/LoginResponseDto';
 import { RegisterDto } from '../schemas/auth/register.schema';
-import { AppError } from '../errors/AppError';
+import { User } from '../entities/User';
 
 export class AuthService {
   private userRepository = new UserRepository();
@@ -45,25 +47,22 @@ export class AuthService {
   }
 
   async login(email: string, password: string): Promise<LoginResponseDto> {
-    // Normalizar el correo.
-    email = email.trim().toLowerCase();
-
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
-      throw new Error('Correo o contraseña incorrectos.');
+      throw new AppError('Correo o contraseña incorrectos.');
     }
 
     // Verificar que la cuenta esté activa.
     if (!user.active) {
-      throw new Error('La cuenta se encuentra deshabilitada.');
+      throw new AppError('La cuenta se encuentra deshabilitada.');
     }
 
     // Comparar la contraseña enviada con el hash almacenado.
     const isValid = await comparePassword(password, user.password);
 
     if (!isValid) {
-      throw new Error('Correo o contraseña incorrectos.');
+      throw new AppError('Correo o contraseña incorrectos.');
     }
 
     const token = generateToken({
@@ -77,5 +76,15 @@ export class AuthService {
 
       token,
     };
+  }
+
+  async getCurrentUser(userId: string): Promise<User> {
+    const user = await this.userRepository.findById(userId);
+
+    if (!user) {
+      throw new AppError('Usuario no encontrado', 404);
+    }
+
+    return user;
   }
 }

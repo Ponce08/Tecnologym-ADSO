@@ -2,10 +2,12 @@ import { Router } from 'express';
 
 import { AuthController } from '../controllers/AuthController';
 
-import { validate } from '../middlewares/validation.middleware';
+import { validateMiddleware } from '../middlewares/validation.middleware';
 
 import { registerSchema } from '../schemas/auth/register.schema';
 import { loginSchema } from '../schemas/auth/login.schema';
+
+import { authMiddleware } from '../middlewares/authMiddleware';
 
 /**
  * Router del módulo de autenticación.
@@ -17,8 +19,14 @@ const router = Router();
 
 const authController = new AuthController();
 
-router.post('/register', validate(registerSchema), authController.register);
+router.post(
+  '/register',
+  validateMiddleware(registerSchema),
+  authController.register,
+);
 
-router.post('/login', validate(loginSchema), authController.login);
+router.post('/login', validateMiddleware(loginSchema), authController.login);
+
+router.get('/me', authMiddleware, authController.me);
 
 export default router;

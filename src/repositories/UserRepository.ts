@@ -1,8 +1,6 @@
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../config/data-source';
 import { User } from '../entities/User';
-import { RegisterDto } from '../schemas/auth/register.schema';
-import { UserResponseDto } from '../dtos/users/UserResponseDto';
 
 /**
  * Repositorio encargado de todas las operaciones relacionadas

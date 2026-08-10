@@ -17,7 +17,7 @@
 
     "skipLibCheck": true,
 
-    "types": ["node"]
+    "types": ["node", "express"]
   },
 
   "include": ["src/**/*"],
