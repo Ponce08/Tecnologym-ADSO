@@ -1,18 +1,18 @@
-import { UserRepository } from '../repositories/UserRepository';
-import { RoleRepository } from '../repositories/RoleRepository';
+import { UserRepository } from '../../Users/repositories/UserRepository';
+import { RoleRepository } from '../../Roles/repositories/RoleRepository';
 
-import { UserMapper } from '../mappers/Usermapper';
+import { UserMapper } from '../../Users/mappers/Usermapper';
 
-import { hashPassword } from '../utils/hash';
-import { comparePassword } from '../utils/hash';
-import { generateToken } from '../utils/jwt';
+import { hashPassword } from '../../../utils/hash';
+import { comparePassword } from '../../../utils/hash';
+import { generateToken } from '../../../utils/jwt';
 
-import { AppError } from '../errors/AppError';
+import { AppError } from '../../../errors/AppError';
 
-import { UserResponseDto } from '../dtos/users/UserResponseDto';
-import { LoginResponseDto } from '../dtos/auth/LoginResponseDto';
-import { RegisterDto } from '../schemas/auth/register.schema';
-import { User } from '../entities/User';
+import { UserResponseDto } from '../../Users/DTOs/UserResponseDto';
+import { LoginResponseDto } from '../DTOs/LoginResponseDto';
+import { RegisterDto } from '../schemas/register.schema';
+import { User } from '../../Users/entities/User';
 
 export class AuthService {
   private userRepository = new UserRepository();
@@ -76,15 +76,5 @@ export class AuthService {
 
       token,
     };
-  }
-
-  async getCurrentUser(userId: string): Promise<User> {
-    const user = await this.userRepository.findById(userId);
-
-    if (!user) {
-      throw new AppError('Usuario no encontrado', 404);
-    }
-
-    return user;
   }
 }

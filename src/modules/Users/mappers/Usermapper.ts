@@ -1,5 +1,5 @@
 import { User } from '../entities/User';
-import { UserResponseDto } from '../dtos/users/UserResponseDto';
+import { UserResponseDto } from '../DTOs/UserResponseDto';
 
 /**
  * Mapper encargado de transformar la entidad User

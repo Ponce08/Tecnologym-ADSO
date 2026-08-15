@@ -4,8 +4,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-import authRoutes from './routes/auth.routes';
-import { errorMiddleware } from './middlewares/errors/error.middleware';
+import { errorMiddleware } from './middlewares/error.middleware';
+import router from './routes';
 
 // Cargar las variables de entorno
 dotenv.config();
@@ -29,7 +29,8 @@ app.use(express.json());
 // Permite recibir datos desde formularios
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/auth', authRoutes);
+// Route
+app.use('/api', router);
 
 // Middleware centralizado de errores
 app.use(errorMiddleware);

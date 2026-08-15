@@ -1,6 +1,5 @@
 import jwt, { JwtPayload, SignOptions } from 'jsonwebtoken';
 import { env } from '../config/env';
-import { AuthPayload } from '../types/AuthPayload';
 
 /**
  * Información que almacenaremos dentro del JWT.

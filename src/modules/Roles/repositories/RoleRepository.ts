@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm';
 
-import { AppDataSource } from '../config/data-source';
 import { Role } from '../entities/Role';
+import { AppDataSource } from '../../../config/data-source';
 
 export class RoleRepository {
   private repository: Repository<Role>;

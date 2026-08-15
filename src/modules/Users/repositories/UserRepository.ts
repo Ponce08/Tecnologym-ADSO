@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
-import { AppDataSource } from '../config/data-source';
 import { User } from '../entities/User';
+import { AppDataSource } from '../../../config/data-source';
 
 /**
  * Repositorio encargado de todas las operaciones relacionadas

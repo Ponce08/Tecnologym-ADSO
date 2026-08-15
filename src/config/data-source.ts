@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { env } from './env';
-import { Role } from '../entities/Role';
-import { User } from '../entities/User';
+import { Role } from '../modules/Roles/entities/Role';
+import { User } from '../modules/Users/entities/User';
 /**
  * Configuración de la fuente de datos principal de la aplicación.
  *

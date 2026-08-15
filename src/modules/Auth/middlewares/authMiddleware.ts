@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyToken } from '../utils/jwt';
-import { AppError } from '../errors/AppError';
+import { AppError } from '../../../errors/AppError';
+import { verifyToken } from '../../../utils/jwt';
 
 export const authMiddleware = (
   req: Request,
