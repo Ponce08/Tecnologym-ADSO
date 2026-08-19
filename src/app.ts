@@ -4,8 +4,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-import { errorMiddleware } from './middlewares/error.middleware';
-import router from './routes';
+import { errorMiddleware } from './presentation/http/middlewares/error.middleware';
+import appRoutes from './presentation/http/routes/AppRoutes';
 
 // Cargar las variables de entorno
 dotenv.config();
@@ -30,7 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Route
-app.use('/api', router);
+app.use('/api', appRoutes);
 
 // Middleware centralizado de errores
 app.use(errorMiddleware);
