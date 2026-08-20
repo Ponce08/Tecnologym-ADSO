@@ -1,23 +1,31 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { User } from './User';
+// import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+// import { User } from './User';
 
-@Entity('roles')
+// @Entity('roles')
+// export class Role {
+//   @PrimaryGeneratedColumn('uuid')
+//   id!: string;
+
+//   @Column({
+//     unique: true,
+//     length: 50,
+//   })
+//   name!: string;
+
+//   @Column({
+//     nullable: true,
+//     length: 255,
+//   })
+//   description?: string;
+
+//   @OneToMany(() => User, (user) => user.role)
+//   users!: User[];
+// }
+
 export class Role {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-
-  @Column({
-    unique: true,
-    length: 50,
-  })
-  name!: string;
-
-  @Column({
-    nullable: true,
-    length: 255,
-  })
-  description?: string;
-
-  @OneToMany(() => User, (user) => user.role)
-  users!: User[];
+  constructor(
+    public readonly id: string,
+    public name: string,
+    public description?: string,
+  ) {}
 }

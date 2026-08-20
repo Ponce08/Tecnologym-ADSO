@@ -29,7 +29,7 @@ export class UserMapper {
       lastName: user.lastName,
       email: user.email,
       active: user.active,
-      role: user.role.name,
+      role: user.roleId,
     };
   }
 }

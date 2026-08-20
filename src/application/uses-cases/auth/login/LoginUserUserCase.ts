@@ -1,8 +1,8 @@
-import { IUserRepository } from '../../../../domain/repositories/iUserRepository';
+import { IUserRepository } from '../../../../domain/repositories/UserRepository.interface';
 import { AppError } from '../../../errors/AppError';
 import { UserMapper } from '../../../mappers/Usermapper';
-import { IPasswordService } from '../../../services/IPasswordService';
-import { ITokenService } from '../../../services/ITokenService';
+import { IPasswordService } from '../../../services/PasswordService.interface';
+import { ITokenService } from '../../../services/TokenService.interface.';
 import { LoginDto } from './LoginDto';
 
 export class LoginUser {
@@ -35,7 +35,7 @@ export class LoginUser {
     const token = this.tokenService.generate({
       sub: user.id,
       email: user.email,
-      role: user.role.name,
+      role: user.roleId,
     });
 
     return {

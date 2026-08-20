@@ -4,7 +4,7 @@ import { env } from '../config/env';
 import {
   ITokenService,
   TokenPayload,
-} from '../../application/services/ITokenService';
+} from '../../application/services/TokenService.interface.';
 
 export class TokenService implements ITokenService {
   private readonly jwtSecret = env.JWT_SECRET!;

@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { env } from './env';
-import { User } from '../../domain/entities/User';
-import { Role } from '../../domain/entities/Role';
+import { UserEntity } from '../database/typeorm/entities/UserEntity';
+import { RoleEntity } from '../database/typeorm/entities/RoleEntity';
 /**
  * Configuración de la fuente de datos principal de la aplicación.
  *
@@ -23,7 +23,7 @@ export const AppDataSource = new DataSource({
 
   logging: true,
 
-  entities: [Role, User],
+  entities: [UserEntity, RoleEntity],
 
   migrations: ['src/migrations/*.ts'],
 });

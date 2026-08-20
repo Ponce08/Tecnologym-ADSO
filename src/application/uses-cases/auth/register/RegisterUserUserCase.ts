@@ -1,7 +1,7 @@
-import { IRoleRepository } from '../../../../domain/repositories/iRoleRepository';
-import { IUserRepository } from '../../../../domain/repositories/iUserRepository';
+import { IRoleRepository } from '../../../../domain/repositories/RoleRepository.interface';
+import { IUserRepository } from '../../../../domain/repositories/UserRepository.interface';
 import { AppError } from '../../../errors/AppError';
-import { IPasswordService } from '../../../services/IPasswordService';
+import { IPasswordService } from '../../../services/PasswordService.interface';
 import { UserMapper } from '../../../mappers/Usermapper';
 import { RegisterDto } from './RegisterDto';
 

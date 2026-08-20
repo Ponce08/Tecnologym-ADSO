@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { ITokenService } from '../../../application/services/ITokenService';
+import { ITokenService } from '../../../application/services/TokenService.interface.';
 
 import { AppError } from '../../../application/errors/AppError';
 

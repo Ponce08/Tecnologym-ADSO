@@ -1,12 +1,15 @@
-import { LoginUser } from '../application/uses-cases/auth/login/LoginUser';
-import { RegisterUser } from '../application/uses-cases/auth/register/RegisterUser';
-import { RoleRepository } from '../infrastructure/database/repositories/RoleRepository';
-import { UserRepository } from '../infrastructure/database/repositories/UserRepository';
+import { LoginUser } from '../application/uses-cases/auth/login/LoginUserUserCase';
+import { RegisterUser } from '../application/uses-cases/auth/register/RegisterUserUserCase';
+
+import { RoleRepository } from '../infrastructure/database/typeorm/repositories/RoleRepository';
+import { UserRepository } from '../infrastructure/database/typeorm/repositories/UserRepository';
+
 import { PasswordService } from '../infrastructure/services/PasswordService';
 import { TokenService } from '../infrastructure/services/TokenService';
+
 import { AuthRoutes } from '../presentation/http/auth/AuthRoutes';
 import { AuthController } from '../presentation/http/auth/AuthController';
-import { createAuthMiddleware } from '../presentation/http/middlewares/authMiddleware';
+import { createAuthMiddleware } from '../presentation/http/middlewares/createAuthMiddleware';
 
 const userRepository = new UserRepository();
 const roleRepository = new RoleRepository();
@@ -30,4 +33,4 @@ export const authController = new AuthController(registerUser, loginUser);
 
 export const authRoutes = AuthRoutes(authController);
 
-export const authMiddleware = createAuthMiddleware(tokenService);
+export const tokenAuthMiddleware = createAuthMiddleware(tokenService);
