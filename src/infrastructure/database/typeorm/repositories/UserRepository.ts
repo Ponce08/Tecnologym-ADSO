@@ -3,21 +3,21 @@ import {
   CreateUserData,
   IUserRepository,
 } from '../../../../domain/repositories/UserRepository.interface';
-import { User } from '../../../../domain/entities/User';
 import { AppDataSource } from '../../../config/AppDataSource';
 import { UserMapper } from '../mappers/UserMapper';
+import { UserEntity } from '../entities/UserEntity';
+import { User } from '../../../../domain/entities/User';
 
 export class UserRepository implements IUserRepository {
-  private repository: Repository<User>;
+  private repository: Repository<UserEntity>;
 
   constructor() {
-    this.repository = AppDataSource.getRepository(User);
+    this.repository = AppDataSource.getRepository(UserEntity);
   }
 
   async findByEmail(email: string): Promise<User | null> {
     const entity = await this.repository.findOne({
       where: { email },
-      relations: ['role'],
     });
 
     if (!entity) {
@@ -29,7 +29,7 @@ export class UserRepository implements IUserRepository {
 
   async create(userData: CreateUserData): Promise<User> {
     const user = this.repository.create(userData);
-
-    return this.repository.save(UserMapper.toPersistence(user));
+    const saveUser = await this.repository.save(user);
+    return UserMapper.toDomain(saveUser);
   }
 }

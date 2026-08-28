@@ -34,10 +34,7 @@ export class UserEntity {
   })
   active!: boolean;
 
-  @Column()
-  roleId!: string;
-
   @ManyToOne(() => RoleEntity, (role) => role.users)
-  @JoinColumn({ name: 'roleId' })
+  @JoinColumn({ name: 'role_id' })
   role?: RoleEntity;
 }

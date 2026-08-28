@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-
-import { LoginUser } from '../../../application/uses-cases/auth/login/LoginUserUserCase';
-import { RegisterUser } from '../../../application/uses-cases/auth/register/RegisterUserUserCase';
+import { RegisterUser } from '../../../application/uses-cases/auth/register/RegisterUser-usecase';
+import { LoginUser } from '../../../application/uses-cases/auth/login/LoginUser-usecase';
 
 export class AuthController {
   constructor(
@@ -12,12 +11,12 @@ export class AuthController {
   register = async (req: Request, res: Response): Promise<void> => {
     const result = await this.registerUser.execute(req.body);
 
-    res.status(201).json(result);
+    res.status(201).json({ success: true, result });
   };
 
   login = async (req: Request, res: Response): Promise<void> => {
     const result = await this.loginUser.execute(req.body);
 
-    res.status(200).json(result);
+    res.status(200).json({ success: true, result });
   };
 }

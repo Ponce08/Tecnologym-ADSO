@@ -11,7 +11,7 @@ import { ZodType } from 'zod';
  *   - continúa al siguiente middleware o controlador
  */
 export function validateMiddleware<T>(schema: ZodType<T>) {
-  return (req: Request, res: Response, next: NextFunction): void => {
+  return (req: Request, _res: Response, next: NextFunction): void => {
     const result = schema.safeParse(req.body);
 
     if (!result.success) {
