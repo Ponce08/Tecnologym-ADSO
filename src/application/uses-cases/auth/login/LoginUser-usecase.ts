@@ -15,11 +15,19 @@ export class LoginUser {
     const user = await this.userRepository.findByEmail(loginData.email);
 
     if (!user) {
-      throw new AppError('Correo o contraseña incorrectos.');
+      throw new AppError(
+        `El correo ${loginData.email} no existe`,
+        404,
+        'EMAIL_NOT_EXISTS',
+      );
     }
 
     if (!user.active) {
-      throw new AppError('La cuenta se encuentra deshabilitada.');
+      throw new AppError(
+        'La cuenta se encuentra deshabilitada.',
+        401,
+        'ACCOUNT_DISABLED',
+      );
     }
 
     const isValid = await this.passwordService.compare(
@@ -28,7 +36,11 @@ export class LoginUser {
     );
 
     if (!isValid) {
-      throw new AppError('Correo o contraseña incorrectos.');
+      throw new AppError(
+        'Correo o contraseña incorrectos.',
+        401,
+        'INCORRECT_PASSWORD_OR_EMAIL',
+      );
     }
 
     const token = this.tokenService.generate({

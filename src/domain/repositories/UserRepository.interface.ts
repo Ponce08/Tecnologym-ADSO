@@ -9,8 +9,22 @@ export interface CreateUserData {
   role: Role;
 }
 
+export interface UpdateUserData {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+}
+
 export interface IUserRepository {
-  findByEmail(email: string): Promise<User | null>;
+  findByEmail(email: string | string[]): Promise<User | null>;
+
+  findById(id: string | string[]): Promise<User | null>;
+
+  findAll(): Promise<User[]>;
 
   create(userData: CreateUserData): Promise<User>;
+
+  update(id: string | string[], userData: UpdateUserData): Promise<User>;
+
+  delete(id: string | string[]): Promise<void>;
 }
