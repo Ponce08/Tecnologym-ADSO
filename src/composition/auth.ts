@@ -11,11 +11,20 @@ import { createAuthMiddleware } from '../presentation/http/middlewares/createAut
 import { RegisterUser } from '../application/uses-cases/auth/register/RegisterUser-usecase';
 import { LoginUser } from '../application/uses-cases/auth/login/LoginUser-usecase';
 
+import { GetUsers } from '../application/uses-cases/user/GetUsers';
+import { GetUserById } from '../application/uses-cases/user/GetUserById';
+import { UpdateUser } from '../application/uses-cases/user/UpdateUser';
+import { DeleteUser } from '../application/uses-cases/user/DeleteUser';
+import { CreateUser } from '../application/uses-cases/admin/CreateUser';
+import { UserController } from '../presentation/http/user/UserController';
+import { UserRoutes } from '../presentation/http/user/UserRoutes';
+
+// Auth
 const userRepository = new UserRepository();
 const roleRepository = new RoleRepository();
 
 const passwordService = new PasswordService();
-const tokenService = new TokenService();
+export const tokenService = new TokenService();
 
 export const registerUser = new RegisterUser(
   userRepository,
@@ -33,4 +42,23 @@ export const authController = new AuthController(registerUser, loginUser);
 
 export const authRoutes = AuthRoutes(authController);
 
-export const tokenAuthMiddleware = createAuthMiddleware(tokenService);
+// User
+const getUsers = new GetUsers(userRepository);
+const getUserById = new GetUserById(userRepository);
+const updateUser = new UpdateUser(userRepository);
+const deleteUser = new DeleteUser(userRepository);
+const createUser = new CreateUser(
+  userRepository,
+  roleRepository,
+  passwordService,
+);
+
+const userController = new UserController(
+  getUsers,
+  getUserById,
+  updateUser,
+  deleteUser,
+  createUser,
+);
+
+export const userRoutes = UserRoutes(userController);

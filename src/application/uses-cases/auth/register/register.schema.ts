@@ -31,4 +31,12 @@ export const registerSchema = z.object({
     ),
 });
 
+export const createUserSchema = registerSchema.extend({
+  roleName: z.enum(['Admin', 'Cliente'], {
+    message: 'El rol debe ser Admin o Cliente.',
+  }),
+});
+
 export type RegisterDto = z.infer<typeof registerSchema>;
+
+export type createUserDto = z.infer<typeof createUserSchema>;

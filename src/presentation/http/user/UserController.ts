@@ -3,6 +3,7 @@ import { GetUsers } from '../../../application/uses-cases/user/GetUsers';
 import { GetUserById } from '../../../application/uses-cases/user/GetUserById';
 import { UpdateUser } from '../../../application/uses-cases/user/UpdateUser';
 import { DeleteUser } from '../../../application/uses-cases/user/DeleteUser';
+import { CreateUser } from '../../../application/uses-cases/admin/CreateUser';
 
 export class UserController {
   constructor(
@@ -10,7 +11,14 @@ export class UserController {
     private readonly getUserById: GetUserById,
     private readonly updateUser: UpdateUser,
     private readonly deleteUser: DeleteUser,
+    private readonly createUser: CreateUser,
   ) {}
+
+  create = async (req: Request, res: Response): Promise<void> => {
+    const user = await this.createUser.execute(req.body);
+
+    res.status(201).json(user);
+  };
 
   getAll = async (req: Request, res: Response): Promise<void> => {
     const users = await this.getUsers.execute();
