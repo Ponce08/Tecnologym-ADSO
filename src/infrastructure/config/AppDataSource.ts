@@ -27,3 +27,9 @@ export const AppDataSource = new DataSource({
 
   migrations: ['src/migrations/*.ts'],
 });
+
+export async function connectDatabase(): Promise<void> {
+  await AppDataSource.initialize();
+
+  console.log('✅ Base de datos conectada.');
+}

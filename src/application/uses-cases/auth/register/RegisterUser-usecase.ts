@@ -2,7 +2,7 @@ import { IRoleRepository } from '../../../../domain/repositories/RoleRepository.
 import { IUserRepository } from '../../../../domain/repositories/UserRepository.interface';
 import { AppError } from '../../../errors/AppError';
 import { IPasswordService } from '../../../services/PasswordService.interface';
-import { RegisterDto } from './RegisterDto';
+import { RegisterDto } from './register.schema';
 
 export class RegisterUser {
   constructor(

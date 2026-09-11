@@ -1,5 +1,5 @@
-import app from '../../app';
-import { env } from '../../infrastructure/config/env';
+import app from '../app';
+import { env } from '../infrastructure/config/env';
 
 export function startHttpServer(): void {
   app.listen(env.PORT, () => {

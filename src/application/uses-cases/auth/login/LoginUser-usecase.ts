@@ -2,7 +2,7 @@ import { IUserRepository } from '../../../../domain/repositories/UserRepository.
 import { AppError } from '../../../errors/AppError';
 import { IPasswordService } from '../../../services/PasswordService.interface';
 import { ITokenService } from '../../../services/TokenService.interface.';
-import { LoginDto } from './LoginDto';
+import { LoginDto } from './login.schema';
 
 export class LoginUser {
   constructor(

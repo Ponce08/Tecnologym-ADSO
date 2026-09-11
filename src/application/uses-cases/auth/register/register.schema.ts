@@ -1,9 +1,5 @@
 import { z } from 'zod';
 
-/**
- * Esquema para validar la información enviada
- * al registrar un nuevo usuario.
- */
 export const registerSchema = z.object({
   firstName: z
     .string()

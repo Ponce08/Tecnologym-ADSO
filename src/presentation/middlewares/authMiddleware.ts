@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { ITokenService } from '../../../application/services/TokenService.interface.';
+import { ITokenService } from '../../application/services/TokenService.interface.';
 
-import { AppError } from '../../../application/errors/AppError';
+import { AppError } from '../../application/errors/AppError';
 
-export const createAuthMiddleware = (tokenService: ITokenService) => {
+export const authMiddleware = (tokenService: ITokenService) => {
   return (req: Request, _res: Response, next: NextFunction): void => {
     const authorization = req.headers.authorization;
 

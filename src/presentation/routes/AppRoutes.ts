@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { authRoutes } from '../../../composition/auth';
-import { userRoutes } from '../../../composition/auth';
+import { authRoutes } from '../../composition/root';
+import { userRoutes } from '../../composition/root';
 
 const router = Router();
 

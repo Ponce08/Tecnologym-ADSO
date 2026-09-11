@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
-import { startHttpServer } from './presentation/http/startHttpServer';
-import { connectDatabase } from './infrastructure/database/connectDatabase';
+import { startHttpServer } from './presentation/startHttpServer';
+import { connectDatabase } from './infrastructure/config/AppDataSource';
 
 async function bootstrap(): Promise<void> {
   try {

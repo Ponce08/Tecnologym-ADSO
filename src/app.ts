@@ -4,8 +4,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-import { errorMiddleware } from './presentation/http/middlewares/error.middleware';
-import appRoutes from './presentation/http/routes/AppRoutes';
+import { errorMiddleware } from './presentation/middlewares/error.middleware';
+import appRoutes from './presentation/routes/AppRoutes';
 
 // Cargar las variables de entorno
 dotenv.config();
