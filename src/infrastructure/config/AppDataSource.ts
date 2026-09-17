@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm';
 import { env } from './env';
 import { UserEntity } from '../database/typeorm/entities/UserEntity';
 import { RoleEntity } from '../database/typeorm/entities/RoleEntity';
+import { CategoryEntity } from '../database/typeorm/entities/CategoryEntity';
 /**
  * Configuración de la fuente de datos principal de la aplicación.
  *
@@ -23,9 +24,9 @@ export const AppDataSource = new DataSource({
 
   logging: true,
 
-  entities: [UserEntity, RoleEntity],
+  entities: [UserEntity, RoleEntity, CategoryEntity],
 
-  migrations: ['src/migrations/*.ts'],
+  migrations: ['src/infrastructure/database/migrations/*.ts'],
 });
 
 export async function connectDatabase(): Promise<void> {

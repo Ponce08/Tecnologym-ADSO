@@ -80,4 +80,8 @@ export class CategoryRepository implements ICategoryRepository {
       active: false,
     });
   }
+
+  async delete(id: string): Promise<void> {
+    await this.repository.delete(id);
+  }
 }

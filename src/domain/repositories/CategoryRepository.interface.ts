@@ -11,15 +11,17 @@ export interface UpdateCategoryData {
 }
 
 export interface ICategoryRepository {
+  delete(id: string | string[]): Promise<void>;
+
   create(data: CreateCategoryData): Promise<Category>;
 
   findAll(includeInactive?: boolean): Promise<Category[]>;
 
-  findById(id: string): Promise<Category | null>;
+  findById(id: string | string[]): Promise<Category | null>;
 
   findByName(name: string): Promise<Category | null>;
 
-  update(id: string, data: UpdateCategoryData): Promise<Category>;
+  update(id: string | string[], data: UpdateCategoryData): Promise<Category>;
 
-  deactivate(id: string): Promise<void>;
+  deactivate(id: string | string[]): Promise<void>;
 }

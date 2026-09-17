@@ -1,12 +1,13 @@
 import { Router } from 'express';
 
-import { authRoutes } from '../../composition/root';
-import { userRoutes } from '../../composition/root';
+import { authRoutes, categoryRoutes, userRoutes } from '../../composition/root';
 
 const router = Router();
 
 router.use('/auth', authRoutes);
 
 router.use('/user', userRoutes);
+
+router.use('/categories', categoryRoutes);
 
 export default router;
