@@ -1,3 +1,12 @@
+/**
+ * Composition root: aquí se instancian y conectan (wiring) las dependencias
+ * concretas de cada módulo (repositorios, servicios, casos de uso,
+ * controladores y rutas), siguiendo el patrón de Inyección de Dependencias.
+ * Mantener esta lógica centralizada aquí permite que el resto de la
+ * aplicación dependa solo de interfaces/abstracciones, sin acoplarse
+ * a implementaciones concretas de infraestructura.
+ */
+
 import { RoleRepository } from '../infrastructure/database/typeorm/repositories/RoleRepository';
 import { UserRepository } from '../infrastructure/database/typeorm/repositories/UserRepository';
 

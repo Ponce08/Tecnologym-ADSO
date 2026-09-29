@@ -8,7 +8,6 @@ import { AppDataSource } from '../../../config/AppDataSource';
 import { UserMapper } from '../mappers/UserMapper';
 import { UserEntity } from '../entities/UserEntity';
 import { User } from '../../../../domain/entities/User';
-import { AppError } from '../../../../application/errors/AppError';
 
 export class UserRepository implements IUserRepository {
   private repository: Repository<UserEntity>;
@@ -57,7 +56,7 @@ export class UserRepository implements IUserRepository {
     return UserMapper.toDomain(saveUser);
   }
 
-  async update(id: string, userData: UpdateUserData): Promise<User> {
+  async update(id: string, userData: UpdateUserData): Promise<User | null> {
     await this.repository.update(id, userData);
 
     const updatedUser = await this.repository.findOne({
@@ -66,7 +65,7 @@ export class UserRepository implements IUserRepository {
     });
 
     if (!updatedUser) {
-      throw new AppError('Usuario no encontrado', 404, 'USER_NOT_FOUND');
+      return null;
     }
 
     return UserMapper.toDomain(updatedUser);

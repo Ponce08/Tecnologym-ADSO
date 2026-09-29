@@ -15,25 +15,25 @@ export class CategoryController {
     private readonly deleteCategory: DeleteCategory,
   ) {}
 
-  async create(req: Request, res: Response): Promise<void> {
+  create = async (req: Request, res: Response): Promise<void> => {
     const category = await this.createCategory.execute(req.body);
 
     res.status(201).json({
       success: true,
       data: category,
     });
-  }
+  };
 
-  async getAll(req: Request, res: Response): Promise<void> {
+  getAll = async (req: Request, res: Response): Promise<void> => {
     const categories = await this.getCategories.execute();
 
     res.status(200).json({
       success: true,
       data: categories,
     });
-  }
+  };
 
-  async getById(req: Request, res: Response): Promise<void> {
+  getById = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
 
     const category = await this.getCategoryById.execute(id);
@@ -42,9 +42,9 @@ export class CategoryController {
       success: true,
       data: category,
     });
-  }
+  };
 
-  async update(req: Request, res: Response): Promise<void> {
+  update = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
 
     const category = await this.updateCategory.execute(id, req.body);
@@ -53,13 +53,13 @@ export class CategoryController {
       success: true,
       data: category,
     });
-  }
+  };
 
-  async delete(req: Request, res: Response): Promise<void> {
+  delete = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
 
     await this.deleteCategory.execute(id);
 
     res.status(204).send();
-  }
+  };
 }

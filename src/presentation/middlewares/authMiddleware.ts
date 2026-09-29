@@ -1,9 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
-
 import { ITokenService } from '../../application/services/TokenService.interface.';
-
 import { AppError } from '../../application/errors/AppError';
 
+/**
+ * Middleware de autenticación: extrae y valida el token Bearer del header
+ * Authorization, verifica su validez con el tokenService inyectado y, si es
+ * correcto, adjunta el payload decodificado a req.user para que los
+ * siguientes middlewares/controladores puedan acceder al usuario autenticado.
+ */
 export const authMiddleware = (tokenService: ITokenService) => {
   return (req: Request, _res: Response, next: NextFunction): void => {
     const authorization = req.headers.authorization;

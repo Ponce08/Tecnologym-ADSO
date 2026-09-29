@@ -1,5 +1,11 @@
 import { z } from 'zod';
 
+/**
+ * Esquema base de validación para el registro público de usuarios (nombre,
+ * apellido, correo y contraseña con requisitos de complejidad); createUserSchema
+ * lo extiende agregando roleName para permitir la creación administrativa de
+ * usuarios con un rol específico (Admin o Cliente).
+ */
 export const registerSchema = z.object({
   firstName: z
     .string()

@@ -3,17 +3,26 @@ import { ZodError } from 'zod';
 import { AppError } from '../../application/errors/AppError';
 import { EntityNotFoundError, QueryFailedError, TypeORMError } from 'typeorm';
 
+/**
+ * /**
+ * Middleware centralizado de manejo de errores (debe registrarse al final de
+ * la cadena de middlewares de Express). Loguea internamente cada error con
+ * su contexto (método, URL, stack) y traduce cada tipo de error conocido
+ * (AppError, validación Zod, errores de TypeORM, JSON malformado) a una
+ * respuesta HTTP consistente y segura para el cliente, evitando exponer
+ * detalles internos como el stack trace. Cualquier error no reconocido cae
+ * en el bloque final como 500 genérico.
+ *
+ * ============  INFORMACIÓN DE DIAGNÓSTICO  =============
+ * Esta información es para nosotros como desarrolladores.
+ * Nunca debemos enviarla directamente al cliente en producción.
+ */
 export const errorMiddleware = (
   error: unknown,
   req: Request,
   res: Response,
   _next: NextFunction,
 ): void => {
-  /**
-   * ============  INFORMACIÓN DE DIAGNÓSTICO  =============
-   * Esta información es para nosotros como desarrolladores.
-   * Nunca debemos enviarla directamente al cliente en producción.
-   */
   console.error('\n========== ERROR ==========');
   console.error('METHOD:', req.method);
   console.error('URL:', req.originalUrl);

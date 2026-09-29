@@ -24,7 +24,7 @@ export interface IUserRepository {
 
   create(userData: CreateUserData): Promise<User>;
 
-  update(id: string | string[], userData: UpdateUserData): Promise<User>;
+  update(id: string | string[], userData: UpdateUserData): Promise<User | null>;
 
   delete(id: string | string[]): Promise<void>;
 }

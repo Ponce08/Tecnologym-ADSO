@@ -1,5 +1,10 @@
 import { z } from 'zod';
 
+/**
+ * Esquema de validación para el login: normaliza el correo (trim + lowercase)
+ * y exige una contraseña no vacía, usando Zod tanto para validar el formato
+ * como para inferir el tipo LoginDto usado en el caso de uso.
+ */
 export const loginSchema = z.object({
   email: z
     .email('Debe ingresar un correo electrónico válido.')
