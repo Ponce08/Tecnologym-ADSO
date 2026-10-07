@@ -4,6 +4,7 @@ import { env } from './env';
 import { UserEntity } from '../database/typeorm/entities/UserEntity';
 import { RoleEntity } from '../database/typeorm/entities/RoleEntity';
 import { CategoryEntity } from '../database/typeorm/entities/CategoryEntity';
+import { ProductEntity } from '../database/typeorm/entities/ProductEntity';
 /**
  * Configuración de la fuente de datos principal de la aplicación.
  *
@@ -24,7 +25,7 @@ export const AppDataSource = new DataSource({
 
   logging: true,
 
-  entities: [UserEntity, RoleEntity, CategoryEntity],
+  entities: [UserEntity, RoleEntity, CategoryEntity, ProductEntity],
 
   migrations: ['src/infrastructure/database/migrations/*.ts'],
 });

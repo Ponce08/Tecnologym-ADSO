@@ -1,15 +1,18 @@
 import { Request, Response } from 'express';
-import { RegisterUser } from '../../application/uses-cases/auth/register/RegisterUser-usecase';
 import { LoginUser } from '../../application/uses-cases/auth/login/LoginUser-usecase';
+import { CreateUser } from '../../application/uses-cases/admin/CreateUser-usecase';
 
 export class AuthController {
   constructor(
-    private readonly registerUser: RegisterUser,
+    private readonly registerUser: CreateUser,
     private readonly loginUser: LoginUser,
   ) {}
 
   register = async (req: Request, res: Response): Promise<void> => {
-    const result = await this.registerUser.execute(req.body);
+    const result = await this.registerUser.execute({
+      ...req.body,
+      roleName: 'Cliente',
+    });
 
     res.status(201).json({ success: true, result });
   };

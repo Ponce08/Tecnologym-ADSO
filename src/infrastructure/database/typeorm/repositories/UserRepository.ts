@@ -22,11 +22,7 @@ export class UserRepository implements IUserRepository {
       relations: ['role'],
     });
 
-    if (!entity) {
-      return null;
-    }
-
-    return UserMapper.toDomain(entity);
+    return entity ? UserMapper.toDomain(entity) : null;
   }
 
   async findById(id: string): Promise<User | null> {
@@ -35,11 +31,7 @@ export class UserRepository implements IUserRepository {
       relations: ['role'],
     });
 
-    if (!entity) {
-      return null;
-    }
-
-    return UserMapper.toDomain(entity);
+    return entity ? UserMapper.toDomain(entity) : null;
   }
 
   async findAll(): Promise<User[]> {
@@ -52,7 +44,9 @@ export class UserRepository implements IUserRepository {
 
   async create(userData: CreateUserData): Promise<User> {
     const user = this.repository.create(userData);
+
     const saveUser = await this.repository.save(user);
+
     return UserMapper.toDomain(saveUser);
   }
 
@@ -64,11 +58,7 @@ export class UserRepository implements IUserRepository {
       relations: ['role'],
     });
 
-    if (!updatedUser) {
-      return null;
-    }
-
-    return UserMapper.toDomain(updatedUser);
+    return updatedUser ? UserMapper.toDomain(updatedUser) : null;
   }
 
   async delete(id: string): Promise<void> {

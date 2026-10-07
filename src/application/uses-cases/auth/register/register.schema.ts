@@ -39,6 +39,4 @@ export const createUserSchema = registerSchema.extend({
   }),
 });
 
-export type RegisterDto = z.infer<typeof registerSchema>;
-
-export type createUserDto = z.infer<typeof createUserSchema>;
+export type ValidationDataZod = z.infer<typeof createUserSchema>;

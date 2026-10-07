@@ -23,7 +23,7 @@ export class UserController {
   getAll = async (req: Request, res: Response): Promise<void> => {
     const users = await this.getUsers.execute();
 
-    res.status(200).json(users);
+    res.status(200).json(users.map(({ password, ...data }) => data));
   };
 
   getById = async (req: Request, res: Response): Promise<void> => {

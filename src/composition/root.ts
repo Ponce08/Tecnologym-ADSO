@@ -16,7 +16,6 @@ import { TokenService } from '../infrastructure/services/TokenService';
 import { AuthRoutes } from '../presentation/auth/AuthRoutes';
 import { AuthController } from '../presentation/auth/AuthController';
 
-import { RegisterUser } from '../application/uses-cases/auth/register/RegisterUser-usecase';
 import { LoginUser } from '../application/uses-cases/auth/login/LoginUser-usecase';
 
 import { GetUsers } from '../application/uses-cases/user/GetUsers';
@@ -34,21 +33,11 @@ const roleRepository = new RoleRepository();
 const passwordService = new PasswordService();
 export const tokenService = new TokenService();
 
-export const registerUser = new RegisterUser(
-  userRepository,
-  roleRepository,
-  passwordService,
-);
-
 export const loginUser = new LoginUser(
   userRepository,
   passwordService,
   tokenService,
 );
-
-export const authController = new AuthController(registerUser, loginUser);
-
-export const authRoutes = AuthRoutes(authController);
 
 // User
 const getUsers = new GetUsers(userRepository);
@@ -60,6 +49,9 @@ const createUser = new CreateUser(
   roleRepository,
   passwordService,
 );
+
+export const authController = new AuthController(createUser, loginUser);
+export const authRoutes = AuthRoutes(authController);
 
 const userController = new UserController(
   getUsers,

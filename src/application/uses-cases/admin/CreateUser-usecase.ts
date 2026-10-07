@@ -2,7 +2,7 @@ import { IRoleRepository } from '../../../domain/repositories/RoleRepository.int
 import { IUserRepository } from '../../../domain/repositories/UserRepository.interface';
 import { AppError } from '../../errors/AppError';
 import { IPasswordService } from '../../services/PasswordService.interface';
-import { createUserDto } from '../auth/register/register.schema';
+import { ValidationDataZod } from '../auth/register/register.schema';
 
 export class CreateUser {
   constructor(
@@ -11,7 +11,7 @@ export class CreateUser {
     private readonly passwordService: IPasswordService,
   ) {}
 
-  async execute(data: createUserDto) {
+  async execute(data: ValidationDataZod) {
     const existingUser = await this.userRepository.findByEmail(data.email);
 
     if (existingUser) {
