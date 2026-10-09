@@ -4,7 +4,10 @@ import { authMiddleware } from '../middlewares/authMiddleware';
 import { roleMiddleware } from '../middlewares/roleMiddleware';
 import { validateMiddleware } from '../middlewares/validateMiddleware';
 import { tokenService } from '../../composition/root';
-import { createUserSchema } from '../../application/uses-cases/auth/register/register.schema';
+import {
+  createUserSchema,
+  updateRegisterSchema,
+} from '../../infrastructure/schemas-zod/auth/register.schema';
 
 export function UserRoutes(userController: UserController): Router {
   const router = Router();
@@ -26,7 +29,12 @@ export function UserRoutes(userController: UserController): Router {
     userController.create,
   );
 
-  router.put('/:id', authMiddleware(tokenService), userController.update);
+  router.put(
+    '/:id',
+    authMiddleware(tokenService),
+    validateMiddleware(updateRegisterSchema),
+    userController.update,
+  );
 
   router.delete(
     '/:id',

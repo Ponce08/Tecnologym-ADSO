@@ -16,13 +16,13 @@ import { TokenService } from '../infrastructure/services/TokenService';
 import { AuthRoutes } from '../presentation/auth/AuthRoutes';
 import { AuthController } from '../presentation/auth/AuthController';
 
-import { LoginUser } from '../application/uses-cases/auth/login/LoginUser-usecase';
+import { LoginUser } from '../application/uses-cases/auth/LoginUser';
 
 import { GetUsers } from '../application/uses-cases/user/GetUsers';
 import { GetUserById } from '../application/uses-cases/user/GetUserById';
 import { UpdateUser } from '../application/uses-cases/user/UpdateUser';
 import { DeleteUser } from '../application/uses-cases/user/DeleteUser';
-import { CreateUser } from '../application/uses-cases/admin/CreateUser-usecase';
+import { CreateUser } from '../application/uses-cases/auth/CreateUser';
 import { UserController } from '../presentation/user/UserController';
 import { UserRoutes } from '../presentation/user/UserRoutes';
 

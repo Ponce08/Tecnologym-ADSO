@@ -3,6 +3,11 @@ import { roleMiddleware } from '../middlewares/roleMiddleware';
 import { authMiddleware } from '../middlewares/authMiddleware';
 import { CategoryController } from './CategoryController';
 import { tokenService } from '../../composition/root';
+import { validateMiddleware } from '../middlewares/validateMiddleware';
+import {
+  categorySchema,
+  updateCategorySchema,
+} from '../../infrastructure/schemas-zod/categories/category.schema';
 
 export function CategoryRoutes(categoryController: CategoryController): Router {
   const router = Router();
@@ -15,6 +20,7 @@ export function CategoryRoutes(categoryController: CategoryController): Router {
     '/',
     authMiddleware(tokenService),
     roleMiddleware('Admin'),
+    validateMiddleware(categorySchema),
     categoryController.create,
   );
 
@@ -22,6 +28,7 @@ export function CategoryRoutes(categoryController: CategoryController): Router {
     '/:id',
     authMiddleware(tokenService),
     roleMiddleware('Admin'),
+    validateMiddleware(updateCategorySchema),
     categoryController.update,
   );
 

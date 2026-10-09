@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { LoginUser } from '../../application/uses-cases/auth/login/LoginUser-usecase';
-import { CreateUser } from '../../application/uses-cases/admin/CreateUser-usecase';
+import { LoginUser } from '../../application/uses-cases/auth/LoginUser';
+import { CreateUser } from '../../application/uses-cases/auth/CreateUser';
 
 export class AuthController {
   constructor(

@@ -1,7 +1,8 @@
 import { Role } from '../entities/Role';
 import { User } from '../entities/User';
 
-export interface CreateUserData {
+// User(register and login)
+export interface RegisterUserData {
   firstName: string;
   lastName: string;
   email: string;
@@ -9,22 +10,33 @@ export interface CreateUserData {
   role: Role;
 }
 
+export interface LoginUserDomain {
+  email: string;
+  password: string;
+}
+
+// User(update)
 export interface UpdateUserData {
   firstName?: string;
   lastName?: string;
   email?: string;
 }
 
+// Create user(Admin)
+export interface CreateUserData extends Omit<RegisterUserData, 'role'> {
+  roleName: string;
+}
+
 export interface IUserRepository {
   findByEmail(email: string | string[]): Promise<User | null>;
 
-  findById(id: string | string[]): Promise<User | null>;
+  findById(id: string): Promise<User | null>;
 
   findAll(): Promise<User[]>;
 
-  create(userData: CreateUserData): Promise<User>;
+  create(userData: RegisterUserData): Promise<User>;
 
-  update(id: string | string[], userData: UpdateUserData): Promise<User | null>;
+  update(id: string, userData: UpdateUserData): Promise<User | null>;
 
-  delete(id: string | string[]): Promise<void>;
+  delete(id: string): Promise<void>;
 }

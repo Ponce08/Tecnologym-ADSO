@@ -39,4 +39,4 @@ export const createUserSchema = registerSchema.extend({
   }),
 });
 
-export type ValidationDataZod = z.infer<typeof createUserSchema>;
+export const updateRegisterSchema = registerSchema.partial();

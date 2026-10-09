@@ -1,9 +1,9 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { GetUsers } from '../../application/uses-cases/user/GetUsers';
 import { GetUserById } from '../../application/uses-cases/user/GetUserById';
 import { UpdateUser } from '../../application/uses-cases/user/UpdateUser';
 import { DeleteUser } from '../../application/uses-cases/user/DeleteUser';
-import { CreateUser } from '../../application/uses-cases/admin/CreateUser-usecase';
+import { CreateUser } from '../../application/uses-cases/auth/CreateUser';
 
 export class UserController {
   constructor(
@@ -29,7 +29,7 @@ export class UserController {
   getById = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
 
-    const user = await this.getUserById.execute(id);
+    const user = await this.getUserById.execute(String(id));
 
     res.status(200).json(user);
   };
@@ -37,7 +37,7 @@ export class UserController {
   update = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
 
-    const user = await this.updateUser.execute(id, req.body);
+    const user = await this.updateUser.execute(String(id), req.body);
 
     res.status(200).json(user);
   };
@@ -45,7 +45,7 @@ export class UserController {
   delete = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
 
-    await this.deleteUser.execute(id);
+    await this.deleteUser.execute(String(id));
 
     res.status(204).send();
   };

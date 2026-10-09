@@ -4,7 +4,7 @@ import { AppError } from '../../errors/AppError';
 export class DeleteUser {
   constructor(private readonly userRepository: IUserRepository) {}
 
-  async execute(id: string | string[]): Promise<void> {
+  async execute(id: string): Promise<void> {
     const user = await this.userRepository.findById(id);
 
     if (!user) {

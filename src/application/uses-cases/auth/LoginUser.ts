@@ -1,8 +1,10 @@
-import { IUserRepository } from '../../../../domain/repositories/UserRepository.interface';
-import { AppError } from '../../../errors/AppError';
-import { IPasswordService } from '../../../services/PasswordService.interface';
-import { ITokenService } from '../../../services/TokenService.interface.';
-import { LoginDto } from './login.schema';
+import {
+  IUserRepository,
+  LoginUserDomain,
+} from '../../../domain/repositories/UserRepository.interface';
+import { AppError } from '../../errors/AppError';
+import { IPasswordService } from '../../../domain/services/PasswordService.interface';
+import { ITokenService } from '../../../domain/services/TokenService.interface.';
 
 export class LoginUser {
   constructor(
@@ -11,7 +13,7 @@ export class LoginUser {
     private readonly tokenService: ITokenService,
   ) {}
 
-  async execute(loginData: LoginDto) {
+  async execute(loginData: LoginUserDomain) {
     const user = await this.userRepository.findByEmail(loginData.email);
 
     if (!user) {

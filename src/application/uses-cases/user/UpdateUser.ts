@@ -7,7 +7,7 @@ import { AppError } from '../../errors/AppError';
 export class UpdateUser {
   constructor(private readonly userRepository: IUserRepository) {}
 
-  async execute(id: string | string[], userData: UpdateUserData) {
+  async execute(id: string, userData: UpdateUserData) {
     const user = await this.userRepository.findById(id);
 
     if (!user) {

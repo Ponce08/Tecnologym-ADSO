@@ -1,8 +1,10 @@
 import { IRoleRepository } from '../../../domain/repositories/RoleRepository.interface';
-import { IUserRepository } from '../../../domain/repositories/UserRepository.interface';
+import {
+  CreateUserData,
+  IUserRepository,
+} from '../../../domain/repositories/UserRepository.interface';
 import { AppError } from '../../errors/AppError';
-import { IPasswordService } from '../../services/PasswordService.interface';
-import { ValidationDataZod } from '../auth/register/register.schema';
+import { IPasswordService } from '../../../domain/services/PasswordService.interface';
 
 export class CreateUser {
   constructor(
@@ -11,7 +13,7 @@ export class CreateUser {
     private readonly passwordService: IPasswordService,
   ) {}
 
-  async execute(data: ValidationDataZod) {
+  async execute(data: CreateUserData) {
     const existingUser = await this.userRepository.findByEmail(data.email);
 
     if (existingUser) {

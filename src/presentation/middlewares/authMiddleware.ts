@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { ITokenService } from '../../application/services/TokenService.interface.';
+import { ITokenService } from '../../domain/services/TokenService.interface.';
 import { AppError } from '../../application/errors/AppError';
 
 /**
