@@ -14,31 +14,7 @@ export interface ProductProps {
 }
 
 export class Product {
-  constructor(private readonly props: ProductProps) {
-    if (!props.name.trim()) {
-      throw new AppError(
-        'El nombre del producto es obligatorio',
-        400,
-        'PRODUCT_NAME_REQUIRED',
-      );
-    }
-
-    if (props.price < 0) {
-      throw new AppError(
-        'El precio no puede ser negativo',
-        400,
-        'INVALID_PRODUCT_PRICE',
-      );
-    }
-
-    if (props.stock < 0) {
-      throw new AppError(
-        'El stock no puede ser negativo',
-        400,
-        'INVALID_PRODUCT_STOCK',
-      );
-    }
-  }
+  constructor(private readonly props: ProductProps) {}
 
   get id(): string {
     return this.props.id;
@@ -130,6 +106,31 @@ export class Product {
 
   deactivate(): void {
     this.props.active = false;
+    this.props.updatedAt = new Date();
+  }
+
+  updateDetails(data: {
+    name?: string;
+    description?: string;
+    image?: string | null;
+    categoryId?: string;
+  }): void {
+    if (data.name !== undefined) {
+      this.props.name = data.name;
+    }
+
+    if (data.description !== undefined) {
+      this.props.description = data.description;
+    }
+
+    if (data.image !== undefined) {
+      this.props.image = data.image;
+    }
+
+    if (data.categoryId !== undefined) {
+      this.props.categoryId = data.categoryId;
+    }
+
     this.props.updatedAt = new Date();
   }
 }

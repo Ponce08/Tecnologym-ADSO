@@ -1,12 +1,12 @@
 import {
-  CreateProductData,
   IProductRepository,
+  ProductFilters,
 } from '../../../domain/repositories/ProductRepository.interface';
 
-export class CreateProduct {
+export class GetProducts {
   constructor(private readonly productRepository: IProductRepository) {}
 
-  async execute(data: CreateProductData) {
-    return this.productRepository.create(data);
+  async execute(filters: ProductFilters) {
+    return this.productRepository.findAll(filters);
   }
 }

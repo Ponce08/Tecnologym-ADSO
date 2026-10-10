@@ -50,6 +50,7 @@ const createUser = new CreateUser(
   passwordService,
 );
 
+// User y Auth
 export const authController = new AuthController(createUser, loginUser);
 export const authRoutes = AuthRoutes(authController);
 
@@ -92,3 +93,31 @@ const categoryController = new CategoryController(
 );
 
 export const categoryRoutes = CategoryRoutes(categoryController);
+
+// Product
+import { ProductRepository } from '../infrastructure/database/typeorm/repositories/ProductRepository';
+import { CreateProduct } from '../application/uses-cases/product/CreateProduct';
+import { GetProducts } from '../application/uses-cases/product/GetProducts';
+import { GetProductById } from '../application/uses-cases/product/GetProductById';
+import { DeleteProduct } from '../application/uses-cases/product/DeleteProduct';
+import { UpdateProduct } from '../application/uses-cases/product/UpdateProduct';
+import { ProductController } from '../presentation/product/ProductController';
+import { ProductRoutes } from '../presentation/product/ProductRoutes';
+
+const productRepository = new ProductRepository();
+
+const createProduct = new CreateProduct(productRepository);
+const getProducts = new GetProducts(productRepository);
+const getProductById = new GetProductById(productRepository);
+const updateProduct = new UpdateProduct(productRepository);
+const deleteProduct = new DeleteProduct(productRepository);
+
+const productController = new ProductController(
+  createProduct,
+  getProducts,
+  getProductById,
+  updateProduct,
+  deleteProduct,
+);
+
+export const productRoutes = ProductRoutes(productController);

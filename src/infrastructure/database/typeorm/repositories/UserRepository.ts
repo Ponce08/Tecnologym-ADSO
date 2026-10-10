@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm';
 import {
-  CreateUserData,
   IUserRepository,
+  RegisterUserData,
   UpdateUserData,
 } from '../../../../domain/repositories/UserRepository.interface';
 import { AppDataSource } from '../../../config/AppDataSource';
@@ -42,7 +42,7 @@ export class UserRepository implements IUserRepository {
     return entities.map((entity) => UserMapper.toDomain(entity));
   }
 
-  async create(userData: CreateUserData): Promise<User> {
+  async create(userData: RegisterUserData): Promise<User> {
     const user = this.repository.create(userData);
 
     const saveUser = await this.repository.save(user);
