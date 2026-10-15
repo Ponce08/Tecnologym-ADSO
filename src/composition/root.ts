@@ -106,7 +106,7 @@ import { ProductRoutes } from '../presentation/product/ProductRoutes';
 
 const productRepository = new ProductRepository();
 
-const createProduct = new CreateProduct(productRepository);
+const createProduct = new CreateProduct(productRepository, categoryRepository);
 const getProducts = new GetProducts(productRepository);
 const getProductById = new GetProductById(productRepository);
 const updateProduct = new UpdateProduct(productRepository);

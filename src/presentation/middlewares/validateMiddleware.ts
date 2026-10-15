@@ -20,6 +20,7 @@ export function validateMiddleware<T>(schema: ZodType<T>) {
     }
 
     req.body = result.data;
+
     next();
   };
 }

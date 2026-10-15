@@ -14,7 +14,7 @@ export class ProductMapper {
       stock: entity.stock,
       image: entity.image,
       active: entity.active,
-      categoryId: idCategory.id,
+      category: idCategory.name,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     };

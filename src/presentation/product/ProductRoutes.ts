@@ -7,35 +7,36 @@ import {
   productSchema,
   updateProductSchema,
 } from '../../infrastructure/schemas-zod/product/product.schema';
+import { tokenService } from '../../composition/root';
 
 export const ProductRoutes = (productController: ProductController): Router => {
   const router = Router();
 
-  router.get('/', productController.findAll.bind(productController));
+  router.get('/', productController.findAll);
 
-  router.get('/:id', productController.findById.bind(productController));
+  router.get('/:id', productController.findById);
 
   router.post(
     '/',
-    authMiddleware,
-    roleMiddleware('admin'),
+    authMiddleware(tokenService),
+    roleMiddleware('Admin'),
     validateMiddleware(productSchema),
-    productController.create.bind(productController),
+    productController.create,
   );
 
   router.patch(
     '/:id',
-    authMiddleware,
-    roleMiddleware('admin'),
+    authMiddleware(tokenService),
+    roleMiddleware('Admin'),
     validateMiddleware(updateProductSchema),
-    productController.update.bind(productController),
+    productController.update,
   );
 
   router.delete(
     '/:id',
-    authMiddleware,
-    roleMiddleware('admin'),
-    productController.delete.bind(productController),
+    authMiddleware(tokenService),
+    roleMiddleware('Admin'),
+    productController.delete,
   );
 
   return router;

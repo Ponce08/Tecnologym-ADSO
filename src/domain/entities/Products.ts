@@ -1,4 +1,4 @@
-import { AppError } from '../../application/errors/AppError';
+import { DomainError } from '../errors/DomainError';
 
 export interface ProductProps {
   id: string;
@@ -8,7 +8,7 @@ export interface ProductProps {
   stock: number;
   image: string | null;
   active: boolean;
-  categoryId: string;
+  category: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -44,10 +44,6 @@ export class Product {
     return this.props.active;
   }
 
-  get categoryId(): string {
-    return this.props.categoryId;
-  }
-
   get createdAt(): Date {
     return this.props.createdAt;
   }
@@ -58,9 +54,8 @@ export class Product {
 
   changePrice(newPrice: number): void {
     if (newPrice < 0) {
-      throw new AppError(
+      throw new DomainError(
         'El precio no puede ser negativo',
-        400,
         'INVALID_PRODUCT_PRICE',
       );
     }
@@ -71,15 +66,14 @@ export class Product {
 
   decreaseStock(quantity: number): void {
     if (quantity <= 0) {
-      throw new AppError(
+      throw new DomainError(
         'La cantidad debe ser mayor que cero',
-        400,
         'INVALID_STOCK_QUANTITY',
       );
     }
 
     if (quantity > this.props.stock) {
-      throw new AppError('Stock insuficiente', 400, 'INSUFFICIENT_STOCK');
+      throw new DomainError('Stock insuficiente', 'INSUFFICIENT_STOCK');
     }
 
     this.props.stock -= quantity;
@@ -88,9 +82,8 @@ export class Product {
 
   increaseStock(quantity: number): void {
     if (quantity <= 0) {
-      throw new AppError(
+      throw new DomainError(
         'La cantidad debe ser mayor que cero',
-        400,
         'INVALID_STOCK_QUANTITY',
       );
     }
@@ -125,10 +118,6 @@ export class Product {
 
     if (data.image !== undefined) {
       this.props.image = data.image;
-    }
-
-    if (data.categoryId !== undefined) {
-      this.props.categoryId = data.categoryId;
     }
 
     this.props.updatedAt = new Date();

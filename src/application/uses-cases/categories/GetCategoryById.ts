@@ -5,7 +5,7 @@ import { AppError } from '../../errors/AppError';
 export class GetCategoryById {
   constructor(private readonly categoryRepository: ICategoryRepository) {}
 
-  async execute(id: string | string[]): Promise<Category> {
+  async execute(id: string): Promise<Category> {
     const category = await this.categoryRepository.findById(id);
 
     if (!category) {

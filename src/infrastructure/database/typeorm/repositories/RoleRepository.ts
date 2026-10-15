@@ -4,7 +4,7 @@ import { IRoleRepository } from '../../../../domain/repositories/RoleRepository.
 import { RoleEntity } from '../entities/RoleEntity';
 
 export class RoleRepository implements IRoleRepository {
-  private repository: Repository<RoleEntity>;
+  private readonly repository: Repository<RoleEntity>;
 
   constructor() {
     this.repository = AppDataSource.getRepository(RoleEntity);

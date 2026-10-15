@@ -8,10 +8,7 @@ import { AppError } from '../../errors/AppError';
 export class UpdateCategory {
   constructor(private readonly categoryRepository: ICategoryRepository) {}
 
-  async execute(
-    id: string | string[],
-    data: UpdateCategoryData,
-  ): Promise<Category> {
+  async execute(id: string, data: UpdateCategoryData): Promise<Category> {
     const category = await this.categoryRepository.findById(id);
 
     if (!category) {

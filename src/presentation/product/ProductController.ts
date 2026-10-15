@@ -14,7 +14,7 @@ export class ProductController {
     private readonly deleteProduct: DeleteProduct,
   ) {}
 
-  async create(req: Request, res: Response): Promise<void> {
+  create = async (req: Request, res: Response): Promise<void> => {
     const product = await this.createProduct.execute(req.body);
 
     res.status(201).json({
@@ -22,18 +22,18 @@ export class ProductController {
       message: 'Producto creado correctamente',
       data: product,
     });
-  }
+  };
 
-  async findAll(req: Request, res: Response): Promise<void> {
+  findAll = async (req: Request, res: Response): Promise<void> => {
     const products = await this.getProducts.execute(req.query);
 
     res.status(200).json({
       success: true,
       data: products,
     });
-  }
+  };
 
-  async findById(req: Request, res: Response): Promise<void> {
+  findById = async (req: Request, res: Response): Promise<void> => {
     const id = req.params.id as string;
 
     const product = await this.getProductById.execute(id);
@@ -42,9 +42,9 @@ export class ProductController {
       success: true,
       data: product,
     });
-  }
+  };
 
-  async update(req: Request, res: Response): Promise<void> {
+  update = async (req: Request, res: Response): Promise<void> => {
     const id = req.params.id as string;
 
     const product = await this.updateProduct.execute(id, req.body);
@@ -54,9 +54,9 @@ export class ProductController {
       message: 'Producto actualizado correctamente',
       data: product,
     });
-  }
+  };
 
-  async delete(req: Request, res: Response): Promise<void> {
+  delete = async (req: Request, res: Response): Promise<void> => {
     const id = req.params.id as string;
 
     await this.deleteProduct.execute(id);
@@ -65,5 +65,5 @@ export class ProductController {
       success: true,
       message: 'Producto eliminado correctamente',
     });
-  }
+  };
 }

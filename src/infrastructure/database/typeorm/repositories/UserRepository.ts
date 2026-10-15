@@ -10,7 +10,7 @@ import { UserEntity } from '../entities/UserEntity';
 import { User } from '../../../../domain/entities/User';
 
 export class UserRepository implements IUserRepository {
-  private repository: Repository<UserEntity>;
+  private readonly repository: Repository<UserEntity>;
 
   constructor() {
     this.repository = AppDataSource.getRepository(UserEntity);

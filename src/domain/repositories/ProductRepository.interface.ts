@@ -1,11 +1,19 @@
+import { Category } from '../entities/Category';
 import { Product } from '../entities/Products';
 
-export interface CreateProductData {
+export interface CreateProductTypeOrm {
   name: string;
   description: string;
   price: number;
   stock: number;
   image?: string | null;
+  category: Category;
+}
+
+export interface CreateProductData extends Omit<
+  CreateProductTypeOrm,
+  'category'
+> {
   categoryId: string;
 }
 
@@ -44,7 +52,7 @@ export interface PaginatedResult<T> {
 }
 
 export interface IProductRepository {
-  create(data: CreateProductData): Promise<Product>;
+  create(data: CreateProductTypeOrm): Promise<Product>;
 
   findAll(filters: ProductFilters): Promise<PaginatedResult<Product>>;
 

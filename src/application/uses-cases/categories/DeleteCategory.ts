@@ -4,7 +4,7 @@ import { AppError } from '../../errors/AppError';
 export class DeleteCategory {
   constructor(private readonly categoryRepository: ICategoryRepository) {}
 
-  async execute(id: string | string[]): Promise<void> {
+  async execute(id: string): Promise<void> {
     const category = await this.categoryRepository.findById(id);
 
     if (!category) {

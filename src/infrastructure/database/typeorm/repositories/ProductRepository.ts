@@ -1,6 +1,7 @@
+import { Repository } from 'typeorm';
 import { Product } from '../../../../domain/entities/Products';
 import {
-  CreateProductData,
+  CreateProductTypeOrm,
   IProductRepository,
   PaginatedResult,
   ProductFilters,
@@ -11,9 +12,10 @@ import { ProductEntity } from '../entities/ProductEntity';
 import { ProductMapper } from '../mappers/ProductMapper';
 
 export class ProductRepository implements IProductRepository {
-  private readonly repository = AppDataSource.getRepository(ProductEntity);
+  private readonly repository: Repository<ProductEntity> =
+    AppDataSource.getRepository(ProductEntity);
 
-  async create(product: CreateProductData): Promise<Product> {
+  async create(product: CreateProductTypeOrm): Promise<Product> {
     const newProduct = this.repository.create(product);
 
     const savedEntity = await this.repository.save(newProduct);
