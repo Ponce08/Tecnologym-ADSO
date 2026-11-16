@@ -121,3 +121,32 @@ const productController = new ProductController(
 );
 
 export const productRoutes = ProductRoutes(productController);
+
+// Orders
+import { CreateOrder } from '../application/uses-cases/orders/CreateOrder';
+import { OrderRepository } from '../infrastructure/database/typeorm/repositories/OrderRepository';
+import { FindAllOrders } from '../application/uses-cases/orders/FindAllOrders';
+import { FindOrderById } from '../application/uses-cases/orders/FindOrderById';
+import { UpdateOrder } from '../application/uses-cases/orders/UpdateOrderStatus';
+import { OrderController } from '../presentation/orders/OrderController';
+import { OrderRoutes } from '../presentation/orders/OrderRoutes';
+
+// Repositorio
+const orderRepository = new OrderRepository();
+
+// Casos de uso
+const createOrder = new CreateOrder(orderRepository, productRepository);
+const findOrderById = new FindOrderById(orderRepository);
+const findAllOrders = new FindAllOrders(orderRepository);
+const updateOrder = new UpdateOrder(orderRepository);
+
+// Controlador
+const orderController = new OrderController(
+  createOrder,
+  findOrderById,
+  findAllOrders,
+  updateOrder,
+);
+
+// Rutas
+export const orderRoutes = OrderRoutes(orderController);

@@ -12,32 +12,26 @@ import {
 export function CategoryRoutes(categoryController: CategoryController): Router {
   const router = Router();
 
+  router.use(authMiddleware(tokenService));
+  router.use(roleMiddleware('Admin'));
+
   router.get('/', categoryController.getAll);
 
   router.get('/:id', categoryController.getById);
 
   router.post(
     '/',
-    authMiddleware(tokenService),
-    roleMiddleware('Admin'),
     validateMiddleware(categorySchema),
     categoryController.create,
   );
 
   router.put(
     '/:id',
-    authMiddleware(tokenService),
-    roleMiddleware('Admin'),
     validateMiddleware(updateCategorySchema),
     categoryController.update,
   );
 
-  router.delete(
-    '/:id',
-    authMiddleware(tokenService),
-    roleMiddleware('Admin'),
-    categoryController.delete,
-  );
+  router.delete('/:id', categoryController.delete);
 
   return router;
 }

@@ -65,9 +65,9 @@ export class Product {
   }
 
   decreaseStock(quantity: number): void {
-    if (quantity <= 0) {
+    if (!Number.isInteger(quantity) || quantity <= 0) {
       throw new DomainError(
-        'La cantidad debe ser mayor que cero',
+        'La cantidad debe ser un entero mayor que cero',
         'INVALID_STOCK_QUANTITY',
       );
     }
@@ -81,9 +81,9 @@ export class Product {
   }
 
   increaseStock(quantity: number): void {
-    if (quantity <= 0) {
+    if (!Number.isInteger(quantity) || quantity <= 0) {
       throw new DomainError(
-        'La cantidad debe ser mayor que cero',
+        'La cantidad debe ser un entero mayor que cero',
         'INVALID_STOCK_QUANTITY',
       );
     }

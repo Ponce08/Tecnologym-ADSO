@@ -45,6 +45,10 @@ export class LoginUser {
       );
     }
 
+    if (!user.role) {
+      throw new AppError('El rol no existe.', 404, 'ROLE_NOT_EXISTS');
+    }
+
     const token = this.tokenService.generate({
       sub: user.id,
       email: user.email,
