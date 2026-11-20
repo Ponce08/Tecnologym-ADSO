@@ -10,17 +10,42 @@ import { ZodType } from 'zod';
  *   - reemplaza req.body con los datos transformados
  *   - continúa al siguiente middleware o controlador
  */
-export function validateMiddleware<T>(schema: ZodType<T>) {
+// export function validateMiddleware<T>(schema: ZodType<T>) {
+//   return (req: Request, _res: Response, next: NextFunction): void => {
+//     const result = schema.safeParse(req.body);
+
+//     if (!result.success) {
+//       next(result.error);
+//       return;
+//     }
+
+//     req.body = result.data;
+
+//     next();
+//   };
+// }
+
+type RequestSource = 'body' | 'params' | 'query';
+
+export function validateMiddleware<T>(
+  schema: ZodType<T>,
+  source: RequestSource = 'body',
+) {
   return (req: Request, _res: Response, next: NextFunction): void => {
-    const result = schema.safeParse(req.body);
+    const result = schema.safeParse(req[source]);
 
     if (!result.success) {
       next(result.error);
       return;
     }
 
-    req.body = result.data;
-
+    // Reemplazar la fuente por los datos parseados y validados
+    Object.defineProperty(req, source, {
+      value: result.data,
+      writable: true,
+      configurable: true,
+      enumerable: true,
+    });
     next();
   };
 }

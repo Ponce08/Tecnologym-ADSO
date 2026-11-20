@@ -8,7 +8,9 @@ import {
 } from '../../../../domain/repositories/OrderRepository.interface';
 import { AppDataSource } from '../../../config/AppDataSource';
 import { OrderEntity } from '../entities/OrderEntity';
+import { OrderItemEntity } from '../entities/OrderItemEntity';
 import { ProductEntity } from '../entities/ProductEntity';
+import { UserEntity } from '../entities/UserEntity';
 import { OrderMapper } from '../mappers/OrderMapper';
 
 export class OrderRepository implements IOrderRepository {
@@ -16,7 +18,11 @@ export class OrderRepository implements IOrderRepository {
 
   async create(order: Order): Promise<Order> {
     return AppDataSource.transaction(async (manager) => {
+      // Obtener repositorios
       const productRepository = manager.getRepository(ProductEntity);
+      const orderRepository = manager.getRepository(OrderEntity);
+      const orderItemRepository = manager.getRepository(OrderItemEntity);
+      const userRepository = manager.getRepository(UserEntity);
 
       const updatedItems: OrderItem[] = [];
 
@@ -69,21 +75,35 @@ export class OrderRepository implements IOrderRepository {
       }
 
       // Reconstruir el pedido con los datos actualizados
-      const orderWithCurrentPrices = new Order({
-        id: order.id,
-        userId: order.userId,
-        items: updatedItems,
-        status: order.status,
-        createdAt: order.createdAt,
-        updatedAt: order.updatedAt,
+      const userOrder = await userRepository.findOne({
+        where: { id: order.userId },
       });
 
+      if (!userOrder) {
+        throw new AppError('Usuario no encontrado', 404, 'USER_NOT_FOUND');
+      }
+
+      // Construir entidad OrderEntity
+      const newOrder = orderRepository.create({
+        user: userOrder,
+        status: order.status,
+      });
+
+      // Construir entidades OrderItemEntity
+      newOrder.items = updatedItems.map((item) =>
+        orderItemRepository.create({
+          product: { id: item.productId },
+          productName: item.productName,
+          quantity: item.quantity,
+          unitPrice: item.unitPrice.toFixed(2),
+        }),
+      );
       // Guardar pedido y artículos
-      await manager.save(orderWithCurrentPrices);
+      const orderSave = await orderRepository.save(newOrder);
 
       // Recuperar pedido completo
-      const savedEntity = await manager.findOne(OrderEntity, {
-        where: { id: order.id },
+      const savedEntity = await orderRepository.findOne({
+        where: { id: orderSave.id },
         relations: {
           user: true,
           items: {
